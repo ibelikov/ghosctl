@@ -7,12 +7,11 @@ import (
 
 	"github.com/bradleyfalzon/ghinstallation"
 	"github.com/google/go-github/v32/github"
-	"github.com/ibelikov/org-secrets-manager/pkg/config"
 )
 
-// GetClient performs authorization using GitHub App credentials and returns GitHub Client
-func GetClient(config *config.EnvSettings) *github.Client {
-	key, err := base64.URLEncoding.DecodeString(config.PrivateKey)
+// GetAppClient performs authorization using GitHub App credentials and returns GitHub Client
+func GetAppClient(appID int64, installationID int64, privateKey string) *github.Client {
+	key, err := base64.URLEncoding.DecodeString(privateKey)
 	if err != nil {
 		log.Fatalf("Can't base64 decode GH_APP_PRIVATE_KEY env var: %v", err)
 	}
@@ -21,7 +20,7 @@ func GetClient(config *config.EnvSettings) *github.Client {
 	tr := http.DefaultTransport
 
 	// Wrap the shared transport for use with the app ID authenticating with installation ID.
-	itr, err := ghinstallation.New(tr, config.AppID, config.InstallationID, key)
+	itr, err := ghinstallation.New(tr, appID, installationID, key)
 	if err != nil {
 		log.Fatal(err)
 	}

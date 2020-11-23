@@ -4,30 +4,31 @@ import (
 	"log"
 	"os"
 	"strconv"
+
+	"github.com/google/go-github/v32/github"
+	"github.com/ibelikov/org-secrets-manager/pkg/auth"
 )
 
-// EnvSettings describes all of the environment settings.
-type EnvSettings struct {
-	// AppID is the GitHub APP ID.
-	AppID int64
-	// InstallationID is the GitHub App Installation ID.
-	InstallationID int64
-	// Organization is the name of GitHub Organization.
+// Configuration injects the dependencies for CLI actions
+type Configuration struct {
+	Client       *github.Client
 	Organization string
-	// PrivateKey is base64-encoded RSA private key of GitHub App.
-	PrivateKey string
 }
 
-// New parses env vars to EnvSettings.
-func New() *EnvSettings {
-	env := &EnvSettings{
-		AppID:          envInt64("GH_APP_ID"),
-		InstallationID: envInt64("GH_APP_INSTALLATION_ID"),
-		Organization:   os.Getenv("GH_ORG"),
-		PrivateKey:     os.Getenv("GH_APP_PRIVATE_KEY"),
+// New injects configuration that all actions share
+func New() *Configuration {
+	client := auth.GetAppClient(
+		envInt64("GH_APP_ID"),
+		envInt64("GH_APP_INSTALLATION_ID"),
+		os.Getenv("GH_APP_PRIVATE_KEY"),
+	)
+
+	config := &Configuration{
+		Client:       client,
+		Organization: os.Getenv("GH_ORG"),
 	}
 
-	return env
+	return config
 }
 
 func envInt64(name string) int64 {

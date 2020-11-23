@@ -9,15 +9,12 @@ import (
 
 	sodium "github.com/GoKillers/libsodium-go/cryptobox"
 	"github.com/google/go-github/v32/github"
-	"github.com/ibelikov/org-secrets-manager/pkg/auth"
 	"github.com/ibelikov/org-secrets-manager/pkg/config"
 )
 
 // Create org secret with given name and value
-func Create(name string, value string, repos []int64) *github.Response {
-	config := config.New()
-	client := auth.GetClient(config)
-	key, _, err := client.Actions.GetOrgPublicKey(context.Background(), config.Organization)
+func Create(config *config.Configuration, name string, value string, repos []int64) *github.Response {
+	key, _, err := config.Client.Actions.GetOrgPublicKey(context.Background(), config.Organization)
 	if err != nil {
 		log.Fatalf("Can't get Org public key: %v", err)
 	}
@@ -32,7 +29,7 @@ func Create(name string, value string, repos []int64) *github.Response {
 		encryptedSecret.SelectedRepositoryIDs = repos
 	}
 
-	resp, err := client.Actions.CreateOrUpdateOrgSecret(context.Background(), config.Organization, encryptedSecret)
+	resp, err := config.Client.Actions.CreateOrUpdateOrgSecret(context.Background(), config.Organization, encryptedSecret)
 	if err != nil {
 		log.Fatalf("Can't create Org secret: %v", err)
 	}

@@ -3,6 +3,7 @@ package cmd
 import (
 	"fmt"
 
+	"github.com/ibelikov/org-secrets-manager/pkg/config"
 	"github.com/ibelikov/org-secrets-manager/pkg/secrets"
 	"github.com/spf13/cobra"
 )
@@ -18,7 +19,8 @@ var createCmd = &cobra.Command{
 	Short: "create org secret with given name and value",
 	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
-		response := secrets.Create(name, value, repos)
+		config := config.New()
+		response := secrets.Create(config, name, value, repos)
 		fmt.Printf("%v", response.Response.Body)
 	},
 }
