@@ -12,6 +12,7 @@ var rootCmd = &cobra.Command{
 	Short: "GHSecrets is a small CLI to manage GitHub Actions Org Secrets",
 }
 
+// Execute is the main entrance point for cobra CLI
 func Execute() {
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Fprintln(os.Stderr, err)
