@@ -5,7 +5,7 @@ import (
 	"log"
 
 	yaml "github.com/ghodss/yaml"
-	"github.com/ibelikov/org-secrets-manager/pkg/config"
+	"github.com/ibelikov/ghosctl/pkg/config"
 	"github.com/variantdev/vals"
 )
 

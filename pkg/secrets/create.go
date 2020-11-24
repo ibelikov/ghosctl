@@ -9,7 +9,7 @@ import (
 
 	sodium "github.com/GoKillers/libsodium-go/cryptobox"
 	"github.com/google/go-github/v32/github"
-	"github.com/ibelikov/org-secrets-manager/pkg/config"
+	"github.com/ibelikov/ghosctl/pkg/config"
 )
 
 // Create org secret with given name and value

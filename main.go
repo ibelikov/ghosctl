@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/ibelikov/org-secrets-manager/cmd"
+	"github.com/ibelikov/ghosctl/cmd"
 )
 
 func main() {

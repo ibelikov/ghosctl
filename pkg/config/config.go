@@ -7,7 +7,7 @@ import (
 	"strconv"
 
 	"github.com/google/go-github/v32/github"
-	"github.com/ibelikov/org-secrets-manager/pkg/auth"
+	"github.com/ibelikov/ghosctl/pkg/auth"
 )
 
 // Configuration injects the dependencies for CLI actions

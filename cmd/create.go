@@ -3,8 +3,8 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/ibelikov/org-secrets-manager/pkg/config"
-	"github.com/ibelikov/org-secrets-manager/pkg/secrets"
+	"github.com/ibelikov/ghosctl/pkg/config"
+	"github.com/ibelikov/ghosctl/pkg/secrets"
 	"github.com/spf13/cobra"
 )
 

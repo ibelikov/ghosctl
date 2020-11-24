@@ -6,7 +6,7 @@ import (
 	"fmt"
 
 	"github.com/google/go-github/v32/github"
-	"github.com/ibelikov/org-secrets-manager/pkg/config"
+	"github.com/ibelikov/ghosctl/pkg/config"
 )
 
 // List returns the list of GitHub Org Secrets

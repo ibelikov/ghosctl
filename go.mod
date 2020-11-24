@@ -1,4 +1,4 @@
-module github.com/ibelikov/org-secrets-manager
+module github.com/ibelikov/ghosctl
 
 go 1.15
 
