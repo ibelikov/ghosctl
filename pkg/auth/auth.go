@@ -1,32 +1,40 @@
 package auth
 
 import (
-	"encoding/base64"
+	"context"
 	"log"
 	"net/http"
 
 	"github.com/bradleyfalzon/ghinstallation"
 	"github.com/google/go-github/v32/github"
+	"golang.org/x/oauth2"
 )
 
 // GetAppClient performs authorization using GitHub App credentials and returns GitHub Client
-func GetAppClient(appID int64, installationID int64, privateKey string) *github.Client {
-	key, err := base64.URLEncoding.DecodeString(privateKey)
-	if err != nil {
-		log.Fatalf("Can't base64 decode GH_APP_PRIVATE_KEY env var: %v", err)
-	}
-
+func GetAppClient(appID int64, installationID int64, privateKey []byte) *github.Client {
 	// Shared transport to reuse TCP connections.
 	tr := http.DefaultTransport
 
 	// Wrap the shared transport for use with the app ID authenticating with installation ID.
-	itr, err := ghinstallation.New(tr, appID, installationID, key)
+	itr, err := ghinstallation.New(tr, appID, installationID, privateKey)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	// Use installation transport with github.com/google/go-github
 	client := github.NewClient(&http.Client{Transport: itr})
+
+	return client
+}
+
+// GetTokenClient performs authorization using GitHub Personal Token and returns GitHub Client
+func GetTokenClient(token string) *github.Client {
+	ts := oauth2.StaticTokenSource(
+		&oauth2.Token{AccessToken: token},
+	)
+	tc := oauth2.NewClient(context.Background(), ts)
+
+	client := github.NewClient(tc)
 
 	return client
 }
