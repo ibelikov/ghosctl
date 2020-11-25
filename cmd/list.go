@@ -9,6 +9,7 @@ import (
 var listCmd = &cobra.Command{
 	Use:   "list",
 	Short: "lists org secrets",
+	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
 		config := config.New()
 		secrets.List(config)

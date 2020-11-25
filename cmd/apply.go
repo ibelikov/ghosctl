@@ -22,5 +22,7 @@ var applyCmd = &cobra.Command{
 
 func init() {
 	applyCmd.Flags().StringVarP(&path, "file", "f", path, "Path to yaml manifest with secrets definition")
+	applyCmd.MarkFlagRequired("file")
+	applyCmd.MarkFlagFilename("file")
 	rootCmd.AddCommand(applyCmd)
 }

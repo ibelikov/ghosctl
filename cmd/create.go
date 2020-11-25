@@ -29,5 +29,7 @@ func init() {
 	createCmd.Flags().StringVarP(&name, "name", "n", name, "Name of the Org secret")
 	createCmd.Flags().StringVarP(&value, "value", "v", value, "Value of the Org secret")
 	createCmd.Flags().StringSliceVarP(&repos, "repos", "r", repos, "List of repository names that could use this secret")
+	createCmd.MarkFlagRequired("name")
+	createCmd.MarkFlagRequired("value")
 	rootCmd.AddCommand(createCmd)
 }
