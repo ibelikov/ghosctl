@@ -11,7 +11,7 @@ import (
 var (
 	name  string
 	value string
-	repos []int64
+	repos []string
 )
 
 var createCmd = &cobra.Command{
@@ -28,6 +28,6 @@ var createCmd = &cobra.Command{
 func init() {
 	createCmd.Flags().StringVarP(&name, "name", "n", name, "Name of the Org secret")
 	createCmd.Flags().StringVarP(&value, "value", "v", value, "Value of the Org secret")
-	createCmd.Flags().Int64SliceVarP(&repos, "repos", "r", repos, "List of repository IDs that could use this secret")
+	createCmd.Flags().StringSliceVarP(&repos, "repos", "r", repos, "List of repository names that could use this secret")
 	rootCmd.AddCommand(createCmd)
 }

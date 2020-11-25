@@ -1,0 +1,6 @@
+- name: TESTSECRET
+  value: test
+  repos:
+    - jimmy
+    - ci-salt
+    - ci-status

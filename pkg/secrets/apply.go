@@ -11,9 +11,9 @@ import (
 
 // Secret represents yaml manifest structure
 type Secret struct {
-	Name          string  `json:"name"`
-	Value         string  `json:"value"`
-	SelectedRepos []int64 `json:"repos,omitempty"`
+	Name          string   `json:"name"`
+	Value         string   `json:"value"`
+	SelectedRepos []string `json:"repos,omitempty"`
 }
 
 // Apply creates/updates the secrets listed in a given .yaml manifest
