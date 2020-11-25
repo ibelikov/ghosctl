@@ -9,7 +9,12 @@ import (
 	"github.com/variantdev/vals"
 )
 
-// Secret represents yaml manifest structure
+// Manifest represents yaml manifest structure
+type Manifest struct {
+	Secrets []Secret `json:"secrets"`
+}
+
+// Secret represents the structure of secret block
 type Secret struct {
 	Name          string   `json:"name"`
 	Value         string   `json:"value"`
@@ -20,9 +25,9 @@ type Secret struct {
 func Apply(config *config.Configuration, yamlpath string) {
 	runtime, _ := vals.New(vals.Options{})
 
-	secrets := LoadConfig(yamlpath)
+	manifest := LoadConfig(yamlpath)
 
-	for _, secret := range secrets {
+	for _, secret := range manifest.Secrets {
 		renderedSecret, err := runtime.Eval(map[string]interface{}{
 			"value": secret.Value,
 		})
@@ -34,16 +39,16 @@ func Apply(config *config.Configuration, yamlpath string) {
 }
 
 // LoadConfig loads config file and returns Config object merged with defaults
-func LoadConfig(path string) []Secret {
-	secrets := &[]Secret{}
+func LoadConfig(path string) *Manifest {
+	manifest := &Manifest{}
 	configFile, err := ioutil.ReadFile(path)
 	if err != nil {
 		log.Fatalf("Couldn't read secrets manifest from %s: %v", path, err)
 	}
 
-	err = yaml.Unmarshal(configFile, secrets)
+	err = yaml.Unmarshal(configFile, manifest)
 	if err != nil {
 		log.Fatalf("Couldn't process secrets manifest %s: %v", path, err)
 	}
-	return *secrets
+	return manifest
 }
