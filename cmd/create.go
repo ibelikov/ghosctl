@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"fmt"
+	"log"
 
 	"github.com/ibelikov/ghosctl/pkg/config"
 	"github.com/ibelikov/ghosctl/pkg/secrets"
@@ -20,8 +20,8 @@ var createCmd = &cobra.Command{
 	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
 		config := config.New()
-		response := secrets.Create(config, name, value, repos)
-		fmt.Printf("%v", response.Response.Body)
+		secrets.Create(config, name, value, repos)
+		log.Printf("Created Organization Secret %s", name)
 	},
 }
 

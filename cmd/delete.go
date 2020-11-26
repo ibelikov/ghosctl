@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"fmt"
+	"log"
 
 	"github.com/ibelikov/ghosctl/pkg/config"
 	"github.com/ibelikov/ghosctl/pkg/secrets"
@@ -18,13 +18,13 @@ var deleteCmd = &cobra.Command{
 	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
 		config := config.New()
-		response := secrets.Delete(config, name)
-		fmt.Printf("%v", response.Response.Body)
+		secrets.Delete(config, deleteName)
+		log.Printf("Deleted Oganization Secret %s", deleteName)
 	},
 }
 
 func init() {
 	deleteCmd.Flags().StringVarP(&deleteName, "name", "n", deleteName, "Name of the Org secret")
 	deleteCmd.MarkFlagRequired("name")
-	rootCmd.AddCommand(createCmd)
+	rootCmd.AddCommand(deleteCmd)
 }
