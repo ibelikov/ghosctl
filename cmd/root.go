@@ -8,8 +8,8 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "GHSecrets",
-	Short: "GHSecrets is a small CLI to manage GitHub Actions Org Secrets",
+	Use:   "GHOScTl",
+	Short: "GHOScTl is a small CLI to manage GitHub Org Secrets",
 }
 
 // Execute is the main entrance point for cobra CLI

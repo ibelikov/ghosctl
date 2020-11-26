@@ -1,6 +1,9 @@
 package cmd
 
 import (
+	"encoding/json"
+	"fmt"
+
 	"github.com/ibelikov/ghosctl/pkg/config"
 	"github.com/ibelikov/ghosctl/pkg/secrets"
 	"github.com/spf13/cobra"
@@ -12,7 +15,12 @@ var listCmd = &cobra.Command{
 	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
 		config := config.New()
-		secrets.List(config)
+		secrets := secrets.List(config)
+
+		for _, secret := range secrets.Secrets {
+			prettyOutput, _ := json.MarshalIndent(secret, "", "  ")
+			fmt.Printf("%s\n", string(prettyOutput))
+		}
 	},
 }
 
